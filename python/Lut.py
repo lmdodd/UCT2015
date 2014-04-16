@@ -32,18 +32,18 @@ l1CaloScales.L1CaloEmEtScaleLSB = 0.5 # must be the same as egammaLSB
 
 
 # This determines what scale the UCT sees for EG objects.
-l1CaloScales.L1CaloEmThresholds = cms.vdouble()
+#l1CaloScales.L1CaloEmThresholds = cms.vdouble()
 
 # These are modifications to allow more than 7 bits of rank in the EIC path.
-l1CaloScales.L1CaloEmMaxLinScale = cms.uint32(0x3ff)
-l1CaloScales.L1CaloEmMaxRank = cms.uint32(0x3f)
+#l1CaloScales.L1CaloEmMaxLinScale = cms.uint32(0x3ff)
+#l1CaloScales.L1CaloEmMaxRank = cms.uint32(0x3f)
 
-_EGTAU_PRECISION = 9
+#_EGTAU_PRECISION = 7
 # Determine the l1CaloScales max rank which corresponds to this precision.
-l1CaloScales.L1CaloEmMaxRank = cms.uint32(
-    (1 << (_EGTAU_PRECISION - 1)) - 1)
-l1CaloScales.L1CaloEmThresholds = [
-    float(x) for x in range(2 ** (_EGTAU_PRECISION-1))]
+#l1CaloScales.L1CaloEmMaxRank = cms.uint32(
+#    (1 << (_EGTAU_PRECISION - 1)) - 1)
+#l1CaloScales.L1CaloEmThresholds = [
+#    float(x) for x in range(2 ** (_EGTAU_PRECISION-1))]
 
 # Ideal
 eg_calib_v1 = [
@@ -70,21 +70,28 @@ eg_calib_v4 = [
     1.310123, 1.249619, 1.218275, 1.218275
 ]
 
+RCTConfigProducers.eGammaECalScaleFactors = eg_calib_v1
+
+#RCTConfigProducers.eGammaHCalScaleFactors = [1., 1., 1., 1., 1.,
+#                                                 1., 1., 1., 1., 1.,
+#                                                 1., 1., 1., 1., 1.,
+#                                                 1., 1., 1., 1., 1.,
+#                                                 1., 1., 1., 1., 1.,
+#                                                 1., 1., 1.]
+
+RCTConfigProducers.eGammaHCalScaleFactors = [0., 0., 0., 0., 0.,
+                                                 0., 0., 0., 0., 0.,
+                                                 0., 0., 0., 0., 0.,
+                                                 0., 0., 0., 0., 0.,
+                                                 0., 0., 0., 0., 0.,
+                                                 0., 0., 0.]
 
 
-
-
-RCTConfigProducers.eGammaECalScaleFactors = eg_calib_v4
-
-RCTConfigProducers.eGammaHCalScaleFactors = [1., 1., 1., 1., 1.,
-                                                 1., 1., 1., 1., 1.,
-                                                 1., 1., 1., 1., 1.,
-                                                 1., 1., 1., 1., 1.,
-                                                 1., 1., 1., 1., 1.,
-                                                 1., 1., 1.]
 
 # We want the same scales for EG and region paths
 RCTConfigProducers.jetMETECalScaleFactors = RCTConfigProducers.eGammaECalScaleFactors
+# Note this was == 1 in 2012!
+
 
 # HSums
 RCTConfigProducers.jetMETHCalScaleFactors = [1., 1., 1., 1., 1.,
@@ -93,6 +100,15 @@ RCTConfigProducers.jetMETHCalScaleFactors = [1., 1., 1., 1., 1.,
                                                  1., 1., 1., 1., 1.,
                                                  1., 1., 1., 1., 1.,
                                                  1., 1., 1.]
+
+
+#RCTConfigProducers.jetMETHCalScaleFactors = [1., 1., 1., 1., 1.,
+#                                                 1., 1., 1., 1., 1.,
+#                                                 1., 1., 1., 1., 1.,
+#                                                 1., 1., 1., 1., 1.,
+#                                                 1., 1., 1., 1., 1.,
+#                                                 1., 1., 1.]
+
 
 #L1CaloInputScalesProducer =cms.ESProducer("L1CaloInputScalesProducer",
 #L1EcalEtThresholdsPositiveEta = cms.vdouble(
