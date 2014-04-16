@@ -43,8 +43,8 @@ CorrectedDigis = cms.EDProducer(
     puMultCorrect = cms.bool(True),
     regionLSB = RCTConfigProducers.jetMETLSB,
     egammaLSB = cms.double(1.0), # This has to correspond with the value from L1CaloEmThresholds
-    regionSF = regionSF_8TeV_data,
-    regionSubtraction = regionSubtraction_8TeV_data
+    regionSF = regionSF_13TeV_MC,
+    regionSubtraction = regionSubtraction_PU40_MC13TeV
 )
 
 

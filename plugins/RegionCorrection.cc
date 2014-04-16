@@ -139,7 +139,8 @@ RegionCorrection::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
                         }
                 }
 
-
+		//double alpha =1.0;
+		//double gamma =0.0;
 		double alpha = m_regionSF[2*regionEta + 0]; //Region Scale factor (See regionSF_cfi.py)
 		double gamma = 2*((m_regionSF[2*regionEta + 1])/9); //Region Offset. It needs to be divided by nine from the 
                                                                     //jet derived value in the lookup table. (See regionSF_cfi.py) Multiplied by 2 
