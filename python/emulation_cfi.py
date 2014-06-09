@@ -53,7 +53,7 @@ UCT2015Producer = cms.EDProducer(
     "UCT2015Producer",
     puCorrectHI = cms.bool(False), #old style, regions corrected instead
     applyJetCalibration = cms.bool(True), # To Calibrate Jets directly in the producer 
-    puMultCorrect = cms.bool(True), # PU subtract regions
+    puMultCorrect = cms.bool(True), # PU subtract regions (superseedes CorrectedDigis if set to false)
     useUICrho = cms.bool(False), 
     useHI = cms.bool(False),
     # All of these uint32 thresholds are in GeV.
@@ -65,9 +65,9 @@ UCT2015Producer = cms.EDProducer(
     jetSeed = cms.uint32(10),
     tauSeed = cms.uint32(7),
     egtSeed = cms.uint32(2),
-    relativeTauIsolationCut = cms.double(1.),
+    relativeTauIsolationCut = cms.double(1.0),
     relativeJetIsolationCut = cms.double(0.5),
-    switchOffTauIso= cms.double(60),
+    switchOffTauIso= cms.double(100),
     egammaLSB = cms.double(1.0), # This has to correspond with the value from L1CaloEmThresholds
     regionLSB = RCTConfigProducers.jetMETLSB,
     jetSF = jetSF_8TeV_data,

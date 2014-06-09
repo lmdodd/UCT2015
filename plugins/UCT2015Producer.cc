@@ -863,6 +863,7 @@ void UCT2015Producer::makeEGTaus() {
 
                                         // Look for overlapping jet and require that isolation be passed
 //                                          for(list<UCTCandidate>::iterator jet = corrJetList.begin(); jet != corrJetList.end(); jet++) { 
+                                        bool MATCHEDJETFOUND_=false;        
                                         for(list<UCTCandidate>::iterator jet = jetList.begin(); jet != jetList.end(); jet++) {
 
                                                 if((int)egtCand->regionId().iphi() == jet->getInt("rgnPhi") &&
@@ -870,7 +871,7 @@ void UCT2015Producer::makeEGTaus() {
                                                         // Embed tuning parameters into the relaxed objects
                                                         rlxTauList.back().setFloat("associatedJetPt", jet->pt());
 
-
+                                                        MATCHEDJETFOUND_=true;
 
                                                         // EG ID enabled! MC
                                                         if (isEle){
@@ -880,6 +881,8 @@ void UCT2015Producer::makeEGTaus() {
                                                                 rlxEGList.back().setInt("isHighPtEle",isHighPtEle);
                                                         }
 
+
+//                                                        cout<<"Electron? "<<et<<"   "<<jet->pt()<<"   "<<egtCand->regionId().ieta()<<endl;
 
                                                         double jetIsolation = jet->pt() - regionEt;        // Jet isolation
                                                         double relativeJetIsolation = jetIsolation / regionEt;
@@ -895,12 +898,21 @@ void UCT2015Producer::makeEGTaus() {
                                                         bool isolatedEG=false;
                                                         if(et<63 && relativeJetIsolationEG < relativeJetIsolationCut)  isolatedEG=true;; 
                                                         if (et>=63) isolatedEG=true;;
-
-                                                        if(isEle && isolatedEG){
-                                                                isoEGList.push_back(rlxEGList.back());
+                                                        
+                                                        if(isEle){
+                                                                rlxEGList.back().setInt("isIsolated",isolatedEG);
+                                                                if(isolatedEG){
+                                                                        isoEGList.push_back(rlxEGList.back());
+                                                                }
                                                         }
                                                         break;
                                                 }
+                                        }
+                                        if(!MATCHEDJETFOUND_ && isEle) {
+                                                rlxEGList.back().setFloat("associatedJetPt",-777);
+                                                rlxEGList.back().setInt("isHighPtEle",true);        
+                                                rlxEGList.back().setInt("isIsolated",true);
+                                                isoEGList.push_back(rlxEGList.back());
                                         }
                                         break;
                                 }
@@ -965,11 +977,14 @@ void UCT2015Producer::makeTaus() {
 
                                 rlxTauRegionOnlyList.push_back(tauCand);
 
+                        
+                                bool MATCHEDJETFOUND_=false;
                                 // Look for overlapping jet and require that isolation be passed
                                 for(list<UCTCandidate>::iterator jet = jetList.begin(); jet != jetList.end(); jet++) {
 //                                  for(list<UCTCandidate>::iterator jet = corrJetList.begin(); jet != corrJetList.end(); jet++) {      
                                         if((int)region->gctPhi() == jet->getInt("rgnPhi") &&
                                                         (int)region->gctEta() == jet->getInt("rgnEta")) {
+                                                MATCHEDJETFOUND_=true;
                                                 rlxTauRegionOnlyList.back().setFloat("associatedJetPt", jet->pt());
 
                                                 double jetIsolation = jet->pt() - regionEt;        // Jet isolation
@@ -981,6 +996,10 @@ void UCT2015Producer::makeTaus() {
                                                 break;
                                         }
                                 }
+                                if(!MATCHEDJETFOUND_){ 
+                                        rlxTauRegionOnlyList.back().setFloat("associatedJetPt", -777);
+                                        isoTauRegionOnlyList.push_back(rlxTauRegionOnlyList.back());
+                                 }       
         }
         rlxTauRegionOnlyList.sort();
         isoTauRegionOnlyList.sort();
