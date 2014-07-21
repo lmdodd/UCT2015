@@ -37,6 +37,10 @@ double convertRegionPhi(int iPhi);
 // Convert a region index into physical eta (at center of region)
 double convertRegionEta(int iEta);
 
+// Convert a physical eta into a gct region index (L. Dodd)
+int convertGenEta(double genEta);
+
+
 // Get the effective area of a region in a given eta slice.
 double getRegionArea(int gctEta);
 
@@ -44,4 +48,14 @@ double getRegionArea(int gctEta);
 int twrPhi2RegionPhi(int iPhi);
 int twrEta2RegionEta(int iEta);
 
+	// TPG iPhi starts at 1 and goes to 72.  Let's index starting at zero.
+double getPhiTPG(int iPhi);
+
+	// So here, -28 becomes 0.  -1 be comes 27.  +1 becomes 28. +28 becomes 55.
+	// And we have mapped [-28, -1], [1, 28] onto [0, 55]   
+	
+int TPGEtaRange(int ieta);
+
+double getEtaTPG(int ieta); 
+	
 #endif /* end of include guard: HELPERS_W9QK6HND */

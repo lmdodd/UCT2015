@@ -31,6 +31,42 @@ double convertTPGPhi(int iPhi) {
   return -9;
 }
 
+int convertGenEta(double genEta) {
+  const double rgnEtaValues[11] = {
+     0.174, // HB and inner HE bins are 0.348 wide
+     0.522,
+     0.870,
+     1.218,
+     1.566,
+     1.956, // Last two HE bins are 0.432 and 0.828 wide
+     2.586,
+     3.250, // HF bins are 0.5 wide
+     3.750,
+     4.250,
+     4.750
+  };
+  if (genEta > 0){ 
+     for (int n=0; n<11; n++){
+         if (genEta<rgnEtaValues[n]) {
+            int rgnEta = 11 + n;
+            return rgnEta;
+            break;
+         }
+     }
+  }
+  else if (genEta<0){
+     for (int n=0; n<11; n++){
+        if  (std::abs(genEta) < rgnEtaValues[n]){
+		int rgnEta = -n+10;
+		return rgnEta;
+		break;
+	}
+     }
+  }
+return -9;
+}
+
+
 double convertRegionEta(int iEta) {
   const double rgnEtaValues[11] = {
      0.174, // HB and inner HE bins are 0.348 wide
@@ -121,3 +157,35 @@ int twrEta2RegionEta(int iEta) {
   unsigned int rgnIdx = (iEta / 4) + 4;
   return rgnIdx;
 }
+
+
+double getPhiTPG(int iPhi) {
+	// TPG iPhi starts at 1 and goes to 72.  Let's index starting at zero.
+	return convertTPGPhi(iPhi-1);
+}
+
+int TPGEtaRange(int ieta){
+	unsigned int iEta = 0;
+	// So here, -28 becomes 0.  -1 be comes 27.  +1 becomes 28. +28 becomes 55.
+	// And we have mapped [-28, -1], [1, 28] onto [0, 55]   
+	if(ieta < 0)
+		iEta = ieta + 28;
+	else if(ieta > 0)
+		iEta = ieta + 27;
+	return iEta;
+}
+
+double getEtaTPG(int ieta) {
+	unsigned int iEta = 0;
+	// So here, -28 becomes 0.  -1 be comes 27.  +1 becomes 28. +28 becomes 55.
+	// And we have mapped [-28, -1], [1, 28] onto [0, 55]
+
+	if(ieta < 0)
+		iEta = ieta + 28;
+	else if(ieta > 0)
+		iEta = ieta + 27;
+	return convertTPGEta(iEta);
+}
+
+
+
