@@ -46,13 +46,13 @@ CorrectedDigis = cms.EDProducer(
     regionLSB = RCTConfigProducers.jetMETLSB,
     egammaLSB = cms.double(1.0), # This has to correspond with the value from L1CaloEmThresholds
     regionSF = regionSF_8TeV_data,
-    regionSubtraction = regionSubtraction_8TeV_data
+    regionSubtraction = regionSubtraction_PU40_MC13TeV_calib
 )
 
 UCT2015Producer = cms.EDProducer(
     "UCT2015Producer",
     puCorrectHI = cms.bool(False), #old style, regions corrected instead
-    applyJetCalibration = cms.bool(True), # To Calibrate Jets directly in the producer 
+    applyJetCalibration = cms.bool(False), # To Calibrate Jets directly in the producer 
     puMultCorrect = cms.bool(True), # PU subtract regions (superseedes CorrectedDigis if set to false)
     useUICrho = cms.bool(False), 
     useHI = cms.bool(False),
