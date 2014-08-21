@@ -24,7 +24,7 @@ hackHCALMIPs.src = cms.InputTag("valHcalTriggerPrimitiveDigis")
 HcalTPGCoderULUT.LUTGenerationMode = True
 
 CorrectedDigis.regionSF = regionSF_8TeV_data  # using data SF for now
-CorrectedDigis.regionSubtraction  =  regionSubtraction_PU40_MC13TeV   # 40 PU considered the default scenario
+CorrectedDigis.regionSubtraction  =   regionSubtraction_PU40_MC13TeV_calib  # 40 PU considered the default scenario
 #CorrectedDigis.regionSubtraction  =  regionSubtraction_PU20_MC13TeV   
 
 
